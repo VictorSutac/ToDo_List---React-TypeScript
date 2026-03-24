@@ -1,21 +1,58 @@
 import { ToDoListItem } from "./ToDoListItem/ToDoListItem";
-import './ToDoList.scss'
-export const ToDoList = () => {
-    return (
-        <div className="todo-container">
-        <ul className="todo-list failed">
-          <ToDoListItem />
-        </ul>
-        <ul className="todo-list completed">
-          {/* <li className="todo-list-item__wrapper">
-            <span>Вторая задача</span>
-            <div className="todo-list-item__buttons">
-              <button className="btn-trash"></button>
-              <button className="btn-uncheck"></button>
-            </div>
-          </li> */}
-          <ToDoListItem />
-        </ul>
-      </div>
-    );
+import "./ToDoList.scss";
+import { ToDo } from "../../models/todo-item";
+
+export const ToDoList = (props: {
+  todos: ToDo[];
+  updateToDo: Function;
+  deleteToDo: Function;
+}) => {
+  // const todos: ToDo[] = []; - вынесли в компонет отдельно в ToDoListPages.tsx
+  // const todo1: ToDo = {
+  //   id: 0,
+  //   text: "Первая задача",
+  //   isDone: false,
+  // };
+  // const todo2: ToDo = {
+  //   id: 0,
+  //   text: "Вторая задача",
+  //   isDone: true,
+  // };
+
+  const chekedList = () => {
+    return props.todos
+      .filter((item) => !item.isDone)
+      .map((item, idx) => {
+        return (
+          <ToDoListItem
+            toDoItem={item}
+            key={idx}
+            updateToDo={props.updateToDo}
+            deleteToDo={props.deleteToDo}
+          />
+        );
+      });
+  };
+
+  const unCheckedList = () => {
+    return props.todos
+      .filter((item) => item.isDone)
+      .map((item, idx) => {
+        return (
+          <ToDoListItem
+            toDoItem={item}
+            key={idx}
+            updateToDo={props.updateToDo}
+            deleteToDo={props.deleteToDo}
+          />
+        );
+      });
+  };
+
+  return (
+    <div className="todo-container">
+      <ul className="todo-list failed">{chekedList()}</ul>
+      <ul className="todo-list completed">{unCheckedList()}</ul>
+    </div>
+  );
 };
