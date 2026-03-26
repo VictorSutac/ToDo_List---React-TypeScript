@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Form } from "../components/Form/Form";
-import { Header } from "../components/Header/Header";
 import { ToDoList } from "../components/ToDoList/ToDoList";
 import { ToDo } from "../models/todo-item";
 import { ToastContainer } from "react-toastify";
@@ -53,7 +52,7 @@ export const ToDoListPages = () => {
   };
   return (
     <>
-      <Header />
+      
       <Form createNewToDo={createNewToDo} />
       <ToDoList todos={todos} updateToDo={updateToDo} deleteToDo={deleteToDo} />
 
@@ -91,3 +90,7 @@ export const ToDoListPages = () => {
 // так будет более современно
 // это всё для того чтобы возвращать
 // не один родительский блок а несколько
+
+
+//npm i react-router-dom  - установить библиотеку react-router-dom
+// для перехода между страницами приложения

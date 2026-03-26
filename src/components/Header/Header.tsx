@@ -1,17 +1,34 @@
-
+import { NavLink } from "react-router-dom";
 import classes from "./Header.module.scss";
 
 export const Header = () => {
+  const getActiveClass = ({ isActive }: { isActive: boolean }): string => {
+    return isActive ? `${classes.link} ${classes.active}` : classes.link;
+  };
+
   return (
     <header className={classes.header}>
       <div className={classes.container}>
-        <a href="/" className={classes.link}>ToDo</a>
+        <NavLink to="/" className={getActiveClass}>
+          Home
+        </NavLink>
+        <NavLink to="/todo" className={getActiveClass}>
+          ToDo
+        </NavLink>
+
+        {/* <a href="/" className={classes.link}>Home</a>
+        <a href="/todo" className={classes.link}>ToDo</a> 
+        // поменяли на Link 
+        // NavLink - показывает какая из ссылок активная 
+        // isActive -  показывает если ссылка активна или нет
+        //  <NavLink to="/" className={({isActive}) => isActive ? classes.active : ''})}>
+        //Home
+        //</NavLink>
+        // выносим функцию за пределы компонента */}
       </div>
     </header>
   );
 };
-
-
 
 ////
 //
@@ -20,12 +37,12 @@ export const Header = () => {
 // чтобы перенести туда часть стилей
 // переименовали header className="header" в header className={classes.header}
 // для того чтобы не задеть другие стили
-// а нашей переменной в браузере добавился _Префикс 
+// а нашей переменной в браузере добавился _Префикс
 
 ///////
 
-// ранее мы создали фаил Header.scss и 
-// залил туда стили но потом мы удалили его 
+// ранее мы создали фаил Header.scss и
+// залил туда стили но потом мы удалили его
 // тк создали файл Header.module.scss
 // и перенесли стили в него
 // и создали в нем переменную classes {classes.header или classes.link}
@@ -49,5 +66,3 @@ export const Header = () => {
 // ## 📝 ToDo
 // → текст ссылки (что видит пользователь)
 // ---
-
-
