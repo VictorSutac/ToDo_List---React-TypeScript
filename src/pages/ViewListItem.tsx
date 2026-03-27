@@ -1,24 +1,28 @@
 import { useEffect, useState } from "react";
 import { ToDo } from "../models/todo-item";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
-interface ComponentProps {
-  todos: ToDo[];
-}
-export const ItemDescription = ({ todos }: ComponentProps) => {
+// interface ComponentProps {
+//   todos: ToDo[];
+// }
+// export const ViewListItem = ({ todos }: ComponentProps) - заменили
+export const ViewListItem = () => {
+  const todoList = useSelector((state: RootState) => state.todoList.todos);
   const { id } = useParams(); // достоёт параметры из url
   const navigate = useNavigate(); // достоёт навигацию
   const [todo, setTodo] = useState<ToDo>(); // достоёт состояние
 
   useEffect(() => {
-    const searchTodo = todos.find((todo) => String(todo.id) === id);
+    const searchTodo = todoList.find((todo) => String(todo.id) === id);
 
     if (searchTodo) {
       setTodo(searchTodo);
     } else {
       navigate("/404");
     }
-  }, [todos, id, navigate]);// при изменении состояния вызывается эффект 
+  }, [todoList, id, navigate]);// при изменении состояния вызывается эффект 
   // и перезаписывается состояние todo и навигация navigate и id
 
   return (

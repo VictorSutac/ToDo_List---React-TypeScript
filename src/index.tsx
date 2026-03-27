@@ -2,67 +2,12 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./assets/scss/style.scss";
 import "./assets/scss/normalize.scss";
-import { ToDoListPages } from "./pages/ToDoListPages";
 import "react-toastify/dist/ReactToastify.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { HomePage } from "./pages/HomePages";
+import { RouterProvider } from "react-router-dom";
 import { HelmetProvider } from "react-helmet-async";
-import { ToDo } from "./models/todo-item";
-import { NotFound } from "./pages/404";
-import { ItemDescription } from "./pages/itemDescriprion";
-import { Layout } from "./layouts/Layout";
-
-const todos: ToDo[] = [
-  {
-    id: 0,
-    text: "Купить питцу",
-    isDone: false,
-  },
-  {
-    id: 1,
-    text: "Купить хлеб",
-    isDone: true,
-  },
-  {
-    id: 2,
-    text: "Купить молоко",
-    isDone: false,
-  },
-  {
-    id: 3,
-    text: "Купить масло",
-    isDone: true,
-  },
-];
-
-const router = createBrowserRouter(
-  [
-    {
-      path: "/",
-      element: <Layout />,
-      errorElement: <NotFound />,
-      children: [
-        {
-          path: "/",
-          element: <HomePage todos={todos} />,
-        },
-        {
-          path: "/todo",
-          element: <ToDoListPages />,
-        },
-        {
-          path: "/list/:id",
-          element: <ItemDescription todos={todos} />,
-        },
-      ],
-    },
-    {
-      path: "*",
-      element: <NotFound />,
-    },
-  ],
-  { basename: "/app/" },
-);
+import { router } from "./router";
+import { store } from "./store";
+import { Provider } from "react-redux";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -70,7 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <HelmetProvider>
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </HelmetProvider>
   </React.StrictMode>,
 );

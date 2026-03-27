@@ -1,60 +1,51 @@
-import { useState } from "react";
 import { Form } from "../components/Form/Form";
 import { ToDoList } from "../components/ToDoList/ToDoList";
 import { ToDo } from "../models/todo-item";
 import { ToastContainer } from "react-toastify";
-import { toast } from "react-toastify";
+import { RootState } from "../store";
+import { useDispatch, useSelector } from "react-redux";
+import { createAction, deleteAction, updateAction } from "../feature/todoList";
+
 export const ToDoListPages = () => {
-  const [todos, setTodos] = useState<ToDo[]>([
-    // {
-    //   id: 0,
-    //   text: "Первая задача",
-    //   isDone: false,
-    // },
-    // {
-    //   id: 1,
-    //   text: "Вторая задача",
-    //   isDone: true,
-    // },
-    // {
-    //   id: 2,
-    //   text: "Третья задача",
-    //   isDone: true,
-    // },
-  ]);
+  // const [todos, setTodos] = useState<ToDo[]>([
+  //   // {
+  //   //   id: 0,
+  //   //   text: "Первая задача",
+  //   //   isDone: false,
+  //   // },
+  //   // {
+  //   //   id: 1,
+  //   //   text: "Вторая задача",
+  //   //   isDone: true,
+  //   // },
+  //   // {
+  //   //   id: 2,
+  //   //   text: "Третья задача",
+  //   //   isDone: true,
+  //   // },
+  // ]);
   //const todos: ToDo[] = [];
 
+  const todoList = useSelector((state: RootState) => state.todoList.todos);
+  const dispatch = useDispatch();
+
   const createNewToDo = (text: string) => {
-    const newToDo: ToDo = {
-      id: todos.length,
-      text: text,
-      isDone: false,
-    };
-    setTodos([...todos, newToDo]); // доюавляем новые элементы в список
-    toast.success("Задача добавлена ✅");
+    dispatch(createAction(text));
   };
   const updateToDo = (toDoItem: ToDo) => {
-    const newTodos = todos.map((todo) => {
-      if (todo.id === toDoItem.id) {
-        todo.isDone = !todo.isDone;
-      }
-      return todo;
-    });
-    setTodos(newTodos);
-
-    toast.info("Статус обновлён 🔄");
+    dispatch(updateAction(toDoItem));
   };
   const deleteToDo = (toDoItem: ToDo) => {
-    const newTodos = todos.filter((todo) => todo.id !== toDoItem.id);
-    setTodos(newTodos);
-
-    toast.error("Задача удалена ❌");
+    dispatch(deleteAction(toDoItem));
   };
   return (
     <>
-      
       <Form createNewToDo={createNewToDo} />
-      <ToDoList todos={todos} updateToDo={updateToDo} deleteToDo={deleteToDo} />
+      <ToDoList
+        todos={todoList}
+        updateToDo={updateToDo}
+        deleteToDo={deleteToDo}
+      />
 
       <ToastContainer
         position="top-right"
@@ -90,7 +81,6 @@ export const ToDoListPages = () => {
 // так будет более современно
 // это всё для того чтобы возвращать
 // не один родительский блок а несколько
-
 
 //npm i react-router-dom  - установить библиотеку react-router-dom
 // для перехода между страницами приложения
