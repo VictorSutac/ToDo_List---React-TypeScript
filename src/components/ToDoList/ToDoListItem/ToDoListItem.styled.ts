@@ -1,62 +1,78 @@
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
-export const ToDoList = styled.li`
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+export const ToDoList = styled.li<{ $done: boolean }>`
   width: 100%;
   min-height: 50px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #444;
-  line-height: 22px;
 
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
-  background: #fff;
-  border-radius: 5px;
-  position: relative;
-  box-shadow: 0 1px 2px rgba(44, 62, 80, 0.1);
-  margin: 0 0 10px 0;
-  padding: 14px;
-  word-break: break-word;
+  padding: 14px 16px;
+  margin-bottom: 12px;
 
-  &:last-child {
-    margin: 0;
+  border-radius: 16px;
+
+  background: ${({ theme }) => theme.colors.card};
+  border: 1px solid ${({ theme }) => theme.colors.border};
+
+  backdrop-filter: blur(10px);
+
+  transition: all 0.25s ease;
+  animation: ${fadeIn} 0.3s ease;
+  opacity: ${({ $done }) => ($done ? 0.6 : 1)};
+  transform: ${({ $done }) => ($done ? "scale(0.98)" : "scale(1)")};
+
+  &:hover {
+    transform: ${({ $done }) =>
+      $done ? "scale(0.98) translateY(-3px)" : "scale(1) translateY(-3px)"};
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   }
 `;
 
-export const ToDoListText = styled.span``;
+export const ToDoListText = styled.span<{ $done: boolean }>`
+  color: ${({ theme }) => theme.colors.text};
+  font-size: 15px;
+  font-weight: 500;
+
+  text-decoration: ${({ $done }) => ($done ? "line-through" : "none")};
+`;
 
 export const ToDoListContrtols = styled.div`
-  width: 100px;
-  height: 50px;
   display: flex;
-
-  position: absolute;
-  top: 0;
-  right: 0;
+  gap: 10px;
 `;
 
 export const ToDoListContrtol = styled.button<{ icon: string }>`
-  width: 50px;
-  height: 50px;
-  background-color: transparent;
+  width: 40px;
+  height: 40px;
+
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+
+  background-color: ${({ theme }) => theme.colors.backgroundSecondary};
+  background-image: url(${(props) => props.icon});
   background-position: center;
   background-repeat: no-repeat;
-  position: relative;
-  border: 0;
-  box-shadow: none;
-  outline: none;
-  cursor: pointer;
-  background-image: url(${(props) => props.icon});
+  background-size: 20px;
 
-  &:last-of-type:before {
-    content: "";
-    width: 1px;
-    height: 30px;
-    background: #edf0f1;
+  transition: all 0.2s ease;
 
-    position: absolute;
-    top: 10px;
-    left: 0;
+  &:hover {
+    transform: scale(1.1);
+    background-color: ${({ theme }) => theme.colors.primary};
   }
 `;
+
+

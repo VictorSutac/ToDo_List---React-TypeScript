@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import { ToDo } from "../models/todo-item";
 import { toast } from "react-toastify";
+import {v4 as uuid} from "uuid";
 
 export interface TodoState {
   todos: ToDo[];
@@ -17,7 +18,9 @@ export const todoSlice = createSlice({
   reducers: {
     createAction: (state, action: PayloadAction<string>) => {
       const newToDo: ToDo = {
-        id: state.todos.length,
+        id: uuid(), // генерируем уникальный id для 
+        // каждой задачи - через библиотеку uuid (устанавливаем через npm install uuid)
+        // но лучше через бэкэнд выводить id, так как там уже есть база данных и id генерируется автоматически
         text: action.payload,
         isDone: false,
       };

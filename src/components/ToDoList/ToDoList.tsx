@@ -3,6 +3,7 @@ import "./ToDoList.scss";
 import { ToDo } from "../../models/todo-item";
 import { ToDoListContainer } from "./ToDoList.styled";
 
+
 export const ToDoList = (props: {
   todos: ToDo[];
   updateToDo: Function;
@@ -23,11 +24,11 @@ export const ToDoList = (props: {
   const chekedList = () => {
     return props.todos
       .filter((item) => !item.isDone)
-      .map((item, idx) => {
+      .map((item) => {
         return (
           <ToDoListItem
             toDoItem={item}
-            key={idx}
+            key={item.id}
             updateToDo={props.updateToDo}
             deleteToDo={props.deleteToDo}
           />
@@ -38,11 +39,11 @@ export const ToDoList = (props: {
   const unCheckedList = () => {
     return props.todos
       .filter((item) => item.isDone)
-      .map((item, idx) => {
+      .map((item) => {
         return (
           <ToDoListItem
             toDoItem={item}
-            key={idx}
+            key={item.id}
             updateToDo={props.updateToDo}
             deleteToDo={props.deleteToDo}
           />

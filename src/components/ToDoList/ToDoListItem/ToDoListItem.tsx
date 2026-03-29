@@ -13,8 +13,8 @@ export const ToDoListItem = (props: {
   deleteToDo: Function;
 }) => {
   return (
-    <ToDoList>
-      <ToDoListText>{props.toDoItem.text}</ToDoListText>
+    <ToDoList $done={props.toDoItem.isDone}>
+      <ToDoListText $done={props.toDoItem.isDone}>{props.toDoItem.text}</ToDoListText>
       <ToDoListContrtols className="todo-list-item__buttons">
         <ToDoListContrtol
           icon={trashIcon}

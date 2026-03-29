@@ -1,8 +1,16 @@
 import { NavLink } from "react-router-dom";
 import classes from "./Header.module.scss";
-import { ContainerBlock, HeaderBlock } from "./Header.styled";
+import { ContainerBlock, HeaderBlock, ToggleButton } from "./Header.styled";
+import { useDispatch } from "react-redux";
+import { toggleThemeAction } from "../../feature/themesList";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
+
+
 
 export const Header = () => {
+  const dispatch = useDispatch();
+  const theme = useSelector((state: RootState) => state.themesList.theme);
   const getActiveClass = ({ isActive }: { isActive: boolean }): string => {
     return isActive ? `${classes.link} ${classes.active}` : classes.link;
   };
@@ -13,7 +21,7 @@ export const Header = () => {
         <NavLink to="/" className={getActiveClass}>
           Home
         </NavLink>
-        <NavLink to="/todo" className={getActiveClass}>
+        <NavLink to="/list" className={getActiveClass}>
           ToDo
         </NavLink>
 
@@ -26,6 +34,9 @@ export const Header = () => {
         //Home
         //</NavLink>
         // выносим функцию за пределы компонента */}
+        <ToggleButton $isDark={theme.name === "dark"} onClick={()=> dispatch(toggleThemeAction())}> 
+          
+        </ToggleButton>
       </ContainerBlock>
     </HeaderBlock>
   );

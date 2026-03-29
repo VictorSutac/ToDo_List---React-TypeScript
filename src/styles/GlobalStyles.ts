@@ -1,5 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import normalize from "styled-normalize";
+// import { Theme } from "../models/theme";
 
 export const GlobalStyles = createGlobalStyle`
 ${normalize}
@@ -8,12 +9,18 @@ ${normalize}
 }
 
 body {
-    background-color: #edf0f1;
+    transition: all 0.3s ease;
+    background: ${({ theme }) => `
+    linear-gradient(
+    120deg,
+    ${theme.colors.backgroundPrimary},
+    ${theme.colors.backgroundSecondary}
+    )`};
     padding: 50px 0 0 0;
     font-family: 'Roboto', sans-serif;
     font-size: 16px;
     line-height: 1.429;
-    color: black;
+    color: ${({ theme }) => theme.colors.text};
 }
 
 
