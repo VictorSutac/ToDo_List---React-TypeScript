@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import classes from "./Header.module.scss";
+import { ContainerBlock, HeaderBlock } from "./Header.styled";
 
 export const Header = () => {
   const getActiveClass = ({ isActive }: { isActive: boolean }): string => {
@@ -7,13 +8,13 @@ export const Header = () => {
   };
 
   return (
-    <header className={classes.header}>
-      <div className={classes.container}>
+    <HeaderBlock>
+      <ContainerBlock>
         <NavLink to="/" className={getActiveClass}>
-          ToDo
+          Home
         </NavLink>
-        <NavLink to="/list" className={getActiveClass}>
-          List
+        <NavLink to="/todo" className={getActiveClass}>
+          ToDo
         </NavLink>
 
         {/* <a href="/" className={classes.link}>Home</a>
@@ -25,8 +26,8 @@ export const Header = () => {
         //Home
         //</NavLink>
         // выносим функцию за пределы компонента */}
-      </div>
-    </header>
+      </ContainerBlock>
+    </HeaderBlock>
   );
 };
 
